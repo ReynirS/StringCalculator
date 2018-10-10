@@ -4,12 +4,15 @@ function Add(numbers){
 	return 0;
 	}
 	
-	else if(numbers.include("+"){
-		
+	else if(numbers.include(","){
+		var numberArray = numbers.split(",");
+		return parseInt(numberArray[0]) + parseInt(numberArray[1]);
 	}
 	
-	if(numbers.include("-")){
-		
+	else{
+	return parseInt(number);
 	}
 	
 }
+
+module.exports = add;
