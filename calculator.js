@@ -1,21 +1,23 @@
-
-var numbers = "1,-4,-9";
-
-function add (numbers){
-	
+function add (numbers){	
 	if(numbers.length === 0){
 	return 0;
 	}
 	
+	else if(numbers.startsWith("//")){	//different delimiter
+		var index = numbers.indexOf("\n");
+		var delimiter = numbers.substring(2, index);
+		var splitter = new RegExp("["+delimiter+"\n,]+", "g");
+		var numberArray = numbers.substring(index).split(splitter);
+		return sum(numberArray);
+	}
 
-	
-	else if(numbers.includes(",") || numbers.includes("\n")){
+	if(numbers.includes(",") || numbers.includes("\n")){ 	// , or \n are the delimiters
 		var numberArray = numbers.split(/[\n,]+/);
 		
-		if(numbers.includes("-")){
+		if(numbers.includes("-")){			// negative number check
 			var errorList = "";
 			for(var i = 0; i < numberArray.length; i++){
-				if(numberArray[i].includes("-")){
+				if(numberArray[i].includes("-")){	//
 					if(errorList == ""){
 						errorList += numberArray[i];
 					}
@@ -28,17 +30,20 @@ function add (numbers){
 		}
 		return sum(numberArray);
 	}
-	
+
 	else{
-		return parseInt(numbers);
+		if(parseInt(numbers) <= 1000)	// ignores numbers over 1000
+			return parseInt(numbers);	// if it has no delimiter
+		else
+			return 0;
 	}
-	
 }
 
-function sum(numberArray){
+function sum(numberArray){		//sums up all the numbers
 	var total = 0;
 	for(var i = 0; i < numberArray.length; i++){
-		total += parseInt(numberArray[i]);
+		if(parseInt(numberArray[i]) <= 1000)		//ignores numbers over 1000
+			total += parseInt(numberArray[i]);
 	}
 	return total;
 }
